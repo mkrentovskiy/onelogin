@@ -5,20 +5,13 @@
 -export([config/2, priv_dir/0]).
 
 start(_StartType, _StartArgs) ->
+    Priv = priv_dir(),
     VRoutes = [
-        {"/", cowboy_static, [
-                {directory,  <<"priv/www">>},
-                {file, <<"index.html">>},
-                {mimetypes, {fun mimetypes:path_to_mimes/2, default}} 
-            ]},
-        {<<"/auth/[...]">>, auth_handler, []},
-        {<<"/[...]">>, cowboy_static, [
-                {directory,  <<"priv/www">>},
-                {mimetypes, {fun mimetypes:path_to_mimes/2, default}} 
-            ]},
-        {'_', notfound_handler, []}],
-    Routes = [{'_',  VRoutes}], 
-    Dispatch = cowboy_router:compile(Routes),
+            {<<"/auth/[...]">>, auth_handler, []},
+            {"/[...]", cowboy_static, {dir,  filename:join(Priv, "www")}},
+            {"/", cowboy_static, {file, filename:join([Priv, "www", "index.html"])}}
+        ],
+    Dispatch = cowboy_router:compile([{'_',  VRoutes}]),
     cowboy:start_http(webapp_http_listener, 5, 
                       [{port, 8080}],
                       [{env, [{dispatch, Dispatch}]}]),

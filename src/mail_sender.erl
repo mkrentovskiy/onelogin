@@ -8,6 +8,9 @@
 
 -include_lib("deps/alog/include/alog.hrl").
 
+mail(To, Templates, Params) ->
+    ok.
+
 %
 % external
 %
@@ -16,8 +19,8 @@ start_link(Params) ->
     gen_server:start_link(?MODULE, Params, []).
 
 
-init([Params]) ->
-    #mails{}.
+init(Params) ->
+    {ok, #mails{}}.
 
 %
 % gen_server

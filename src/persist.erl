@@ -15,23 +15,25 @@ init_db(Pool) ->
             % Users
             %
 
-            "CREATE TABLE users (
+            "CREATE TABLE ol_users (
                     mail varchar(128) PRIMARY KEY,
                     pass varchar(64) NOT NULL,
+                    name varchar(128) PRIMARY KEY,
                     en boolean NOT NULL DEFAULT TRUE,
                     atime timestamp DEFAULT current_timestamp
                 );",
-            "CREATE INDEX users_mail_pass_en_idx ON users(mail, pass, en);",
+            "CREATE INDEX ol_users_mail_idx ON ol_users(mail);",
+            "CREATE INDEX ol_users_mail_pass_en_idx ON ol_users(mail, pass, en);",
             %
             % Projects
             %
-            "CREATE TABLE clients (
+            "CREATE TABLE ol_clients (
                     domain varchar(128),
                     key varchar(128),
                     en boolean NOT NULL DEFAULT TRUE,
                     atime timestamp DEFAULT current_timestamp
                 );",
-            "CREATE INDEX clients_domain_en_idx ON clients(domain, en);"
+            "CREATE INDEX ol_clients_domain_en_idx ON ol_clients(domain, en);"
         ]).
 
 %

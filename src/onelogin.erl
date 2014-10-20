@@ -5,10 +5,12 @@
 
 start() ->
     ok = appstart(crypto),
+    ok = appstart(alog),
+    ok = appstart(gproc),
     ok = appstart(ranch),
     ok = appstart(cowlib),
     ok = appstart(cowboy),
-    ok = appstart(alog),
+    ok = appstart(ibrowse),
     ok = appstart(onelogin).
 
 
