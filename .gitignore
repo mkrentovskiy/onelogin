@@ -1,0 +1,14 @@
+/Mnesia.*
+/ebin
+.DS_Store
+/deps
+/libs
+*.swp
+*.dump
+rebar
+.project
+.settings
+*.fbc
+*.o
+*.so
+gproc_*

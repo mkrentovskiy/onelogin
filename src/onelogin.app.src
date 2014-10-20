@@ -1,0 +1,12 @@
+{application, onelogin,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { onelogin_app, []}},
+  {env, []}
+ ]}.
