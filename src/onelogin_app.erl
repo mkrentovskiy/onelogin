@@ -7,9 +7,10 @@
 start(_StartType, _StartArgs) ->
     Priv = priv_dir(),
     VRoutes = [
+            {"/", cowboy_static, {file, filename:join([Priv, "www", "index.html"])}},
             {<<"/auth/[...]">>, auth_handler, []},
-            {"/[...]", cowboy_static, {dir,  filename:join(Priv, "www")}},
-            {"/", cowboy_static, {file, filename:join([Priv, "www", "index.html"])}}
+            {<<"/rpc/[...]">>, rpc_handler, []},
+            {"/[...]", cowboy_static, {dir,  filename:join(Priv, "www")}}
         ],
     Dispatch = cowboy_router:compile([{'_',  VRoutes}]),
     cowboy:start_http(webapp_http_listener, 5, 

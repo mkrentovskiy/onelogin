@@ -2,6 +2,7 @@
 
 -export([init_db/1]).
 -export([check_user/3, add_user/3, del_user/2]).
+-export([domain_keys/2]).
 
 -include_lib("deps/alog/include/alog.hrl").
 
@@ -29,7 +30,8 @@ init_db(Pool) ->
             %
             "CREATE TABLE ol_clients (
                     domain varchar(128),
-                    key varchar(128),
+                    domain_key varchar(128),
+                    server_key varchar(128),
                     en boolean NOT NULL DEFAULT TRUE,
                     atime timestamp DEFAULT current_timestamp
                 );",
@@ -60,4 +62,9 @@ del_user(Pool, Mail) ->
 % domain's ops
 %
 
+domain_keys(Pool, Domain) ->
+    case persist_pgsql:qe(Pool, "SELECT domain_key, server_key FROM ol_clients WHERE en=TRUE AND domain=$1", [Domain]) of
+        {ok, {_, [Keys]}} -> Keys;
+        Any -> undefined
+    end.
 

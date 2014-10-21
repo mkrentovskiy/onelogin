@@ -12,7 +12,7 @@
       .logo { background: url('/img/logo.png') no-repeat center center; height: 200px; }
     </style> 
     
-    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+    <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
@@ -22,12 +22,32 @@
     <div class="container">
       <div class="logo">&#0160;</div>
       <ul class="nav nav-tabs" role="tablist">
-        <li><a href="#login" role="tab" data-toggle="tab">Log in</a></li>
-        <li><a href="#reg" role="tab" data-toggle="tab">Profile</a></li>
-        <li><a href="#reset" role="tab" data-toggle="tab">Reset password</a></li>
-        <li><a href="#update" role="tab" data-toggle="tab">Update password</a></li>
-        <li><a href="#info" role="tab" data-toggle="tab">User info</a></li>
+        <li><a href="#login" role="tab" data-toggle="tab" class="hide">Log in</a></li>
+        <li><a href="#reg" role="tab" data-toggle="tab" class="hide">Register</a></li>
+        <li><a href="#reset" role="tab" data-toggle="tab" class="hide">Reset password</a></li>
+        <li><a href="#update" role="tab" data-toggle="tab" class="hide">Update password</a></li>
+        <li><a href="#info" role="tab" data-toggle="tab" class="hide">User info</a></li>
       </ul>
+      </ul>
+      <div class="brick2">
+        <div class="alert alert-info hide" role="alert" id="a_loading">
+          Loading...
+        </div>
+        <div class="alert alert-success hide" role="alert" id="a_reg_success">
+          Registration successful, please, check your mailbox.
+        </div>
+        <div class="alert alert-success hide" role="alert" id="a_reset_success">
+          We send mail with auth URL. Please, check our mailbox.
+        </div>
+        <div class="alert alert-success hide" role="alert" id="a_update_success">
+          The password was updated. You are logged in.
+        </div>
+        <div class="alert alert-danger hide" role="alert" id="a_no_server">
+          Can't get valid replay from server!
+        </div>
+        <div class="alert alert-danger hide" role="alert" id="a_"></div>
+        <div class="alert alert-danger hide" role="alert" id="a_"></div>
+      </div>
       <div class="tab-content brick2">
         <div class="tab-pane" id="login">
           <form action="#" id="login_form" onsubmit="$.app.login(); return false;" class="form-horizontal" role="form">
@@ -40,7 +60,7 @@
             <div class="form-group">
               <label for="id_login_password" class="control-label col-sm-2">Password</label>
               <div class="col-sm-5">
-                <input id="id_logn_password" class="form-control" type="password" name="password">                      
+                <input id="id_login_password" class="form-control" type="password" name="password">                      
               </div>
             </div>
             <div class="form-group">
@@ -59,21 +79,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="id_reg_password" class="control-label col-sm-2">Password</label>
-              <div class="col-sm-5">
-                <input id="id_reg_password" class="form-control" type="password" name="password">                      
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="id_reg_password2" class="control-label col-sm-2">Password repeat</label>
-              <div class="col-sm-5">
-                <input id="id_reg_password2" class="form-control" type="password" name="password">                      
-              </div>
-            </div>
-            <div class="form-group">
               <label for="id_reg_name" class="control-label col-sm-2">Name</label>
               <div class="col-sm-5">
-                <input id="id_reg_name" class="form-control" type="text" name="mail" placeholder="Ali G">
+                <input id="id_reg_name" class="form-control" type="text" name="name" placeholder="Ali G">
               </div>
             </div>
             <div class="form-group">
@@ -105,8 +113,8 @@
           </form>                  
         </div>
         <div class="tab-pane" id="update">
-          <form action="#" id="reg_form" onsubmit="$.app.update(); return false;" class="form-horizontal" role="form">
-            <input type="hidden" name="token">
+          <form action="#" id="update_form" onsubmit="$.app.update(); return false;" class="form-horizontal" role="form">
+            <input id="id_update_token" type="hidden" name="token">
             <div class="form-group">
               <label for="id_update_password" class="control-label col-sm-2">Password</label>
               <div class="col-sm-5">
@@ -127,7 +135,7 @@
           </form>        
         </div>
         <div class="tab-pane" id="info">
-          <form action="#" id="info_form" onsubmit="$.app.logout(); return false;" class="form-horizontal" role="form">
+          <form action="#" id="logout_form" onsubmit="$.app.logout(); return false;" class="form-horizontal" role="form">
             <div class="form-group">
               <label for="id_info_mail" class="control-label col-sm-2">Mail</label>
               <div class="col-sm-5" id="id_info_mail">
