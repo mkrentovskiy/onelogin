@@ -4,15 +4,20 @@
 
 
 start() ->
-    ok = appstart(crypto),
-    ok = appstart(alog),
-    ok = appstart(gproc),
-    ok = appstart(ranch),
-    ok = appstart(cowlib),
-    ok = appstart(cowboy),
-    ok = appstart(ibrowse),
-    ok = appstart(onelogin).
-
+    lists:foldl(fun(I, _) -> ok = appstart(I) end, [], [
+            crypto,
+            alog,
+            gproc,
+            ranch,
+            cowlib,
+            cowboy,
+            ibrowse,
+            asn1,
+            public_key,
+            ssl,
+            gen_smtp,
+            onelogin
+        ]).
 
 appstart(App) ->
     case application:start(App) of

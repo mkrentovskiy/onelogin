@@ -25,8 +25,8 @@
         <li><a href="#login" role="tab" data-toggle="tab" class="hide">Log in</a></li>
         <li><a href="#reg" role="tab" data-toggle="tab" class="hide">Register</a></li>
         <li><a href="#reset" role="tab" data-toggle="tab" class="hide">Reset password</a></li>
-        <li><a href="#update" role="tab" data-toggle="tab" class="hide">Update password</a></li>
         <li><a href="#info" role="tab" data-toggle="tab" class="hide">User info</a></li>
+        <li><a href="#update" role="tab" data-toggle="tab" class="hide">Update password</a></li>
       </ul>
       </ul>
       <div class="brick2">
@@ -112,6 +112,27 @@
             </div>
           </form>                  
         </div>
+        <div class="tab-pane" id="info">
+          <form action="#" id="logout_form" onsubmit="$.app.logout(); return false;" class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="id_info_mail" class="control-label col-sm-2">Mail</label>
+              <div class="col-sm-5" id="id_info_mail">
+              anonymous@v2r.me
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="id_info_name" class="control-label col-sm-2">Name</label>
+              <div class="col-sm-5" id="id_info_name">
+                Anonymous
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button id="logout_button" type="submit" class="btn btn-default">Logout</button>
+              </div>
+            </div>
+          </form>        
+        </div>
         <div class="tab-pane" id="update">
           <form action="#" id="update_form" onsubmit="$.app.update(); return false;" class="form-horizontal" role="form">
             <input id="id_update_token" type="hidden" name="token">
@@ -130,27 +151,6 @@
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button id="update_button" type="submit" class="btn btn-default">Update</button>
-              </div>
-            </div>
-          </form>        
-        </div>
-        <div class="tab-pane" id="info">
-          <form action="#" id="logout_form" onsubmit="$.app.logout(); return false;" class="form-horizontal" role="form">
-            <div class="form-group">
-              <label for="id_info_mail" class="control-label col-sm-2">Mail</label>
-              <div class="col-sm-5" id="id_info_mail">
-              anonymous@v2r.me
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="id_info_name" class="control-label col-sm-2">Name</label>
-              <div class="col-sm-5" id="id_info_name">
-                Anonymous
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button id="logout_button" type="submit" class="btn btn-default">Logout</button>
               </div>
             </div>
           </form>        

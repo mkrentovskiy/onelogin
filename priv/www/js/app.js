@@ -144,7 +144,7 @@
     }
 
     function api(func, params, callback) {
-        $.post('/auth/' + func, params, function(d) { callback(d ? JSON.parse(d) : { result: 'error', error: 'no_server' }); });
+        $.post('/auth/' + func, params, function(d) { callback(d ? d : { result: 'error', error: 'no_server' }); });
     }
 
 })(window.jQuery);
