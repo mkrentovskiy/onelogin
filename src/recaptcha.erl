@@ -9,7 +9,7 @@
 
 
 check(Req) ->
-    {{IP, _}, Req2} = cowboy_req:peer(Req),
+    {IP, Req2} = ?REAL_IP(Req),
     {Challenge, Req3} = cowboy_req:qs_val(<<"recaptcha_challenge_field">>, Req2, <<"">>),
     {Response, Req4} = cowboy_req:qs_val(<<"recaptcha_response_field">>, Req3, <<"">>),
     Key = ?CONFIG(recaptcha_private_key, ""),

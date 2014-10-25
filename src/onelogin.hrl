@@ -16,6 +16,12 @@
 -define(PUB(Event, Msg), pubsub:pub(Event, Msg)).
 -define(SUB(Event), pubsub:sub(Event)).
 -define(UNSUB(Event), pubsub:unsub(Event)).
+-define(LOOKUP_SUB(Reg), gproc:lookup_pid({p, l, Reg})).
+
+-define(REAL_IP(Req), cowboy_req:header(<<"X-Real-IP">>, Req)).
+
+-define(RE_MAIL, "^.+@[^@]+\\.[^@]{2,}$").
+-define(RE_TOKEN, "^[a-zA-Z0-9=]+$").
 
 %
 % Params
@@ -23,6 +29,7 @@
 
 -define(RECONNECT_TIMEOUT, 5 * 1000).
 -define(MAIL_RESEND_TIMEOUT, 60 * 1000).
+-define(MAX_FAIL_COUNT, 16).
 
 -define(SHORT_SESSION, 30 * 60).
 -define(MEDIUM_SESSION, 24 * 3600).
@@ -35,7 +42,8 @@
 %
 
 -define(TEMPLATES, [
-        {"reg", template_reg}
+        {"reg", template_reg},
+        {"reset", template_reset}
     ]).
 -record(mails, {
         relay = [],
@@ -50,5 +58,7 @@
         timer = 0,
         auth = false,
         mail = undefined,
-        info = []
+        info = [],
+        fail_count = 0,
+        token = <<"">>
     }).

@@ -1,0 +1,12 @@
+From: OneLogin Service<onelogin@{{ domain }}>
+To: Old user<{{ mail_to }}>
+Subject: Password reset for {{ domain }}
+
+Hi!
+
+Lost your password? Not a problem, follow:
+
+https://{{ domain }}/#update:{{ token }}
+
+WBR,
+OneLogin Service

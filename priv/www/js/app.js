@@ -1,6 +1,7 @@
 (function($) {
     var RECAPTCHA_PUBLIC_KEY = "6Lc4QfwSAAAAANMllvNwsOJ4hsX3ABIAXgXzjqqG";
-    var RE_MAIL = /.+@[^@]+\.[^@]{2,}$/;
+    var RE_MAIL = /^.+@[^@]+\.[^@]{2,}$/;
+    var RE_TOKEN = /[a-zA-Z0-9=]+/;
     var RE_ANY = /^.+$/;
     var opts = ['login', 'reg', 'reset', 'update', 'logout'];
 
@@ -11,6 +12,7 @@
                 case 'ok': {
                     $("#id_info_mail").text(m.mail);
                     $("#id_info_name").text(m.name);
+                    $("#id_update_token").val(m.token);
                     $("ul.nav a[href='#info']").removeClass("hide").tab('show');
                     $("ul.nav a[href='#update']").removeClass("hide");
                     break;
@@ -20,7 +22,7 @@
                     var a = (h && h.length > 1) ? h.split(':', 2) : ['login','']; 
                     switch(a[0]) {
                         case 'update': {
-                            if(a[1] && a[1].match(/[a-zA-Z0-9]+/)) {
+                            if(a[1] && a[1].match(RE_TOKEN)) {
                                 $("#id_update_token").val(a[1]);
                                 $("ul.nav a[href='#update']").removeClass("hide").tab('show');
                             } else {
