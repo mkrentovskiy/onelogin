@@ -38,7 +38,7 @@ handle_call(_Msg, _From, State) ->
 handle_cast({mail, To, Template, Params}, State) ->
     Last = case lists:filter(fun(I) -> I =:= To end, State#mails.last_mails) of
         [] ->
-            {ok, UBody} = Template:render(Params ++ [{mail_to, To}, {domain, ?CONFIG(domain, "localhost")}]),
+            {ok, UBody} = Template:render(Params ++ [{mail_to, To}, {domain, ?DOMAIN}]),
             Body = binary_to_list(iolist_to_binary(UBody)),
             ?DEBUG("Send ~p to ~p and relay ~p", [Body, To, State#mails.relay]),
             R = gen_smtp_client:send({ State#mails.from, [To], Body }, State#mails.relay),

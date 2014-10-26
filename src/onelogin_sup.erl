@@ -14,7 +14,7 @@ start_link() ->
 
 init([]) ->
     Modules = lists:flatten([apply(M) || M <- ?CONFIG(modules, [])]),
-    {ok, { {one_for_one, 5, 10}, Modules}}.
+    {ok, {{one_for_one, 500, 1000}, Modules}}.
 
 
 apply({Module, ConfigName}) ->

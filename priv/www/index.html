@@ -9,7 +9,7 @@
       .brick1 { margin-top: 10px; }
       .brick2 { margin-top: 20px; }
       .r { text-align: right; }
-      .logo { background: url('/img/logo.png') no-repeat center center; height: 200px; }
+      .logo { background: url('/img/logo.png') no-repeat center center; height: 200px; cursor: pointer; }
     </style> 
     
     <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
@@ -20,7 +20,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="logo">&#0160;</div>
+      <div class="logo" onclick="window.location.href='/'">&#0160;</div>
       <ul class="nav nav-tabs" role="tablist">
         <li><a href="#login" role="tab" data-toggle="tab" class="hide">Log in</a></li>
         <li><a href="#reg" role="tab" data-toggle="tab" class="hide">Register</a></li>
@@ -50,6 +50,9 @@
         </div>
         <div class="alert alert-danger hide" role="alert" id="a_unknown_user">
           User wasn't found on out server.
+        </div>
+        <div class="alert alert-danger hide" role="alert" id="a_unknown_user_really">
+          User wasn't found on out server. I check it twice!
         </div>
         <div class="alert alert-danger hide" role="alert" id="a_invalid_token">
           Your operation token are invalid. Please, repeat last operation.
@@ -164,7 +167,7 @@
             <div class="form-group">
               <label for="id_update_password2" class="control-label col-sm-2">Password repeat</label>
               <div class="col-sm-5">
-                <input id="id_update_password2" class="form-control" type="password" name="password">                      
+                <input id="id_update_password2" class="form-control" type="password" name="password2">                      
               </div>
             </div>
             <div class="form-group">

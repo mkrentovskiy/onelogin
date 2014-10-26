@@ -19,7 +19,7 @@ init_db(Pool) ->
             "CREATE TABLE ol_users (
                     mail varchar(128) PRIMARY KEY,
                     pass varchar(64) NOT NULL,
-                    name varchar(128) PRIMARY KEY,
+                    name varchar(128),
                     en boolean NOT NULL DEFAULT TRUE,
                     atime timestamp DEFAULT current_timestamp
                 );",

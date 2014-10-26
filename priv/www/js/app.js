@@ -1,7 +1,7 @@
 (function($) {
-    var RECAPTCHA_PUBLIC_KEY = "6Lc4QfwSAAAAANMllvNwsOJ4hsX3ABIAXgXzjqqG";
+    var RECAPTCHA_PUBLIC_KEY = "6LdlTvwSAAAAAFvqQcBJz6R4ioF7Rn6knnHwEA3n";
     var RE_MAIL = /^.+@[^@]+\.[^@]{2,}$/;
-    var RE_TOKEN = /[a-zA-Z0-9=]+/;
+    var RE_TOKEN = /^[a-zA-Z0-9=+\/]+$/;
     var RE_ANY = /^.+$/;
     var opts = ['login', 'reg', 'reset', 'update', 'logout'];
 
@@ -119,7 +119,7 @@
             $("#" + opt + "_button").removeAttr("disabled");        
         } else {
             switch(opt) {
-                case 'login': { go('/#info'); break; }
+                case 'login': { go('/'); break; }
                 case 'reg': { alerts('reg_success'); break; }
                 case 'reset': { alerts('reset_success'); break; }
                 case 'update': { alerts('update_success'); setTimeout(function() { go('/#info'); }, 5000); break;}
