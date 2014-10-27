@@ -122,7 +122,7 @@
                 case 'login': { go('/'); break; }
                 case 'reg': { alerts('reg_success'); break; }
                 case 'reset': { alerts('reset_success'); break; }
-                case 'update': { alerts('update_success'); setTimeout(function() { go('/#info'); }, 5000); break;}
+                case 'update': { alerts('update_success'); setTimeout(function() { go('/'); }, 5000); break;}
                 case 'logout': { go('/'); break; }
             }
         }

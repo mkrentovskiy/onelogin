@@ -2,7 +2,7 @@
 
 -export([init_db/1]).
 -export([check_user/2, get_user/3, add_user/4, update_user/3, del_user/2]).
--export([domain_keys/2]).
+-export([domain_keys/2, update_domain/4, disable_domain/2]).
 
 -include_lib("deps/alog/include/alog.hrl").
 
@@ -52,6 +52,7 @@ check_user(Pool, Mail) ->
             false
     end.
 
+
 get_user(Pool, Mail, Pass) ->
     case persist_pgsql:qe(Pool, "SELECT mail, name FROM ol_users WHERE en=TRUE AND mail=$1 AND pass=$2", [Mail, Pass]) of
         {ok, {_, [{Mail, Name}]}} ->
@@ -62,11 +63,14 @@ get_user(Pool, Mail, Pass) ->
             none
     end.
 
+
 add_user(Pool, Mail, Name, Pass) ->
     persist_pgsql:qe(Pool, "INSERT INTO ol_users(mail, name, pass) VALUES ($1, $2, $3);", [Mail, Name, Pass]).
 
+
 update_user(Pool, Mail, Pass) ->
     persist_pgsql:qe(Pool, "UPDATE ol_users SET pass=$1 WHERE mail=$2;", [Pass, Mail]).
+
 
 del_user(Pool, Mail) ->
     persist_pgsql:qe(Pool, "UPDATE ol_users SET en=FALSE WHERE mail=$1;", [Mail]).
@@ -76,8 +80,29 @@ del_user(Pool, Mail) ->
 %
 
 domain_keys(Pool, Domain) ->
-    case persist_pgsql:qe(Pool, "SELECT domain_key, server_key FROM ol_clients WHERE en=TRUE AND domain=$1", [Domain]) of
+    case persist_pgsql:qe(Pool, "SELECT domain_key, server_key FROM ol_clients WHERE en=TRUE AND domain=$1;", [Domain]) of
         {ok, {_, [Keys]}} -> Keys;
-        Any -> undefined
+        _Any -> undefined
     end.
 
+
+update_domain(Pool, Domain, DomainKey, ServerKey) ->
+    case persist_pgsql:qe(Pool, "UPDATE ol_clients SET domain_key=$1,server_key=$2 WHERE domain=$3;", 
+            [DomainKey, ServerKey, Domain]) of
+        {ok, 1} -> 
+            ok;
+        Any -> 
+            ?WARNING("Got ~p on updating domain keys, make insert.", [Any]),
+            case persist_pgsql:qe(Pool, "INSERT INTO ol_clients(domain, domain_key, server_key) VALUES ($1, $2, $3);", 
+                    [Domain, DomainKey, ServerKey]) of
+                {ok, 1} ->
+                    ok;
+                Any1 ->
+                    ?ERROR("Got error ~p on updating domain keys.", [Any1]),
+                    error
+            end
+    end.    
+
+
+disable_domain(Pool, Domain) ->
+    persist_pgsql:qe(Pool, "UPDATE ol_clients SET en=FALSE WHERE domain=$1;", [Domain]).

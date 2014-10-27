@@ -1,7 +1,7 @@
 -module(session).
 -behaviour(gen_server).
 
--export([check/1, process/3, random/0]).
+-export([check/1, process/3, random/0, pwd_to_db_pwd/1, smd5/1]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 
 -include("onelogin.hrl").
