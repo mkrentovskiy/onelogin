@@ -2,7 +2,7 @@
     $url = 'http://v2r.me/rpc/auth';
     $domain = "test";
     $client_key = "tJ2YvnmsPpYJn7fwG9qqhpDmMG891m1z";
-    // $server_key = "x9eIt0IlKnt3PeGR3DPps2TGQnRHhtD5";
+    $server_key = "x9eIt0IlKnt3PeGR3DPps2TGQnRHhtD5";
 
     $u = array();
     if($_POST['mail'] && $_POST['password']) {
@@ -21,7 +21,11 @@
         );
         $context  = stream_context_create($options);
         $u = json_decode(file_get_contents($url, false, $context), true);
-        // skip server valid check cause PHP coders don't need it
+        
+        if($u['sign']) {
+            if(md5($u['result'] . ($u['result'] == 'ok' ? $u['mail'] . $u['name'] : $u['error']) . $server_key) != $u['sign']) 
+                $u = array();
+        }
     }
 ?>
 <!doctype html>
